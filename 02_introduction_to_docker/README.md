@@ -16,6 +16,14 @@ Docker is a platform for building, running and shipping applications in a consis
 
 What Docker does is to package the application with everything it needs to run. Therefore, if it works on the development machine, it will work on testing and production machines as well. Additionally, any new comers will not have to go through a complex local setup, but just use that Docker container.
 
+Docker download and run dependencies in a container, which is an isolated environment that allows multiple applications use different versions of some software side by side.
+
+  `docker-compose up`
+  
+Docker can also easily remove the dependencies associated with an application when it is not in use.
+
+  `docker-compose down --rmi all`
+
 You can run multiple Docker containers (for example, multiple applications) in you machine. Each Docker container will generate its needed environment and avoid clashes.
 
 ## Virtual Machines Vs Containers
@@ -26,25 +34,25 @@ A VM is an abstraction of a machine (from its physical hardware). We can run mul
 
 Problems with VMs are that:
 
-- each VM needs its own OS
+- each VM needs its own OS. Each copy of OS will need to be maintained, liscenced, patched and monitor.
 - slow to start
-- resource intensive (each VM takes up a slice of the hardware)
+- resource intensive (each VM takes up a slice of the actual hardware - CPU, RAM, Storage)
 
-A container is an isolated environment for running an application, just as a VM. Differences are that:
+A container is an isolated environment for running an application (Allow running multiple apps in isolation), just as a VM. Differences are that:
 
 - they all share the OS of the host and are therefore, more lightweight.
 - containers start up very quickly.
-- they use up less hardware resources.
+- they need less hardware resources (no need to assign CPU cores or memory space).
 
 ## Docker architecture
 
-Docker uses a client-server architecture which communicate using a REST API. The server is called the **Docker Engine**. It sits on the background and takes care of building and running containers. Technically, a container is a process like any other one running in your computer.
+Docker uses a client-server architecture which communicate using a REST API. The server is called the **Docker Engine**. It sits on the background and takes care of building and running containers. Technically, a container is a process like any other one running in your computer (The container is technically a special process that runs on the computer. All containers share the kernel of the host).
 
-Containers don't share the complete OS of the host, but the kernel of the OS. The kernel is the part of the OS that manages the applications and the allocation of hardware resources. Each operating system has a different kernel and can therefore only run different containers.
+**Containers don't share the complete OS of the host, but the kernel of the OS**. The kernel is the part of the OS that manages the applications and the allocation of hardware resources. Each operating system has a different kernel and can therefore only run different containers.
 
 ![kernels](img/02_kernels.png)
 
-Starting from Windows 10, Windows is shipped with both a Windows kernel and a Linux kernel. Therefore, Windows machines can run both Windows and Linux containers. Each kernel will handle the respective ones. MacOS has a special kernel. It does not have native support for containers. Because of this, containers in MacOS need to run inside a Linux VM.
+Starting from Windows 10, Windows is shipped with both a Windows kernel and a Linux kernel. Therefore, Windows machines can run both Windows and Linux containers. Each kernel will handle the respective ones. MacOS has a special kernel. It does not have native support for containers. Because of this, containers in MacOS need to run inside a light-weight Linux VM.
 
 Once you've installed Docker in your machine, start it and run `docker version` on the terminal.
 
@@ -56,7 +64,10 @@ Add a `Dockerfile` to the application. We can call this *dockerizing the applica
 
 The `Dockerfile` is a plain text file that Docker uses to package the application into an **Image**. This image contains everything that the application needs to run. This includes a cut-down OS, a runtime environment (like Node or Python), the application files, third-party libraries, environment variables, etc. Once we have an image, we give it to Docker so that the image can be run in a Container.
 
-Once we have that image, we can push it to a Docker registry (like DockerHub). From there we can pull it to any machine running Docker. This machine can be a testing or production server for example.
+Docker starts a container using an image. A container is a special process with its own file system, provided by the image. Instead of launching and running an application inside a typical process, we tell docker to run it inside a container.
+
+The beauty of Docker:
+An image can be pushed to a Docker registry (Docker Hub), then put on any machines running Docker. We can pack an application with an image and run it anywhere. From there we can pull it to any machine running Docker. This machine can be a testing or production server for example.
 
 You can list the images in your computer by running
 
