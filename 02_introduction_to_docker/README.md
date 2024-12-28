@@ -98,6 +98,8 @@ Now that we have a Dockerfile, we need to tell Docker to build the image. To do 
 
 ``` shell
 docker build -t <image_name> .
+// docker build -t (tag to identify the image) hello-docker . (specify where to find Dockerfile eg. in current directory)
+
 ```
 
 ![docker build](img/05_docker_build.png)
