@@ -111,16 +111,16 @@ apt remove nano
 
 ## Linux file system
 
-In Linux (just as with other OSs), files are organized in a tree. In Linux, everything is a file (including processes and directories). The root directory in Linux is just `/`. After that, standard directories include
+In Linux (just as with other OSs), files are organized in a tree. In Linux, everything is a file (including processes, directories, devices, n/w sockets). The root directory in Linux is just `/`. After that, standard directories include
 
 - `bin` which includes all the binaries for that distro
 - `boot` which includes all the files related to booting the system
 - `dev` which is short for *devices* (not development) and includes all the files needed for accessing devices
 - `etc` which is short for *editable text configurations* (not etcetera) and includes all the configuration files
 - `home` which where all home directories (users) are stored
-- `root` which is the home directory of the root user
+- `root` which is the home directory of the root user - can be accessed by root user only
 - `lib` which is where software library dependencies are stored
-- `var` which is short for *variable* and is where we store files that are update frequently (like logs)
+- `var` which is short for *variable* and is where we store files that are update frequently (like logs, application data etc.)
 - `proc` which is where we store files that represent running processes
 
 ``` txt
@@ -152,13 +152,15 @@ To navigate the files we need to use commands.
   - `cd ../..` will take us two levels up in the tree
   - `cd ~` will take us to the home directory of the current user
 
+  note: ctrl+w deletes last word on terminal
+
 ## Manipulating files and directories
 
 - `mkdir` will create a new directory as a child of the current directory
 - we use the `mv <current_location> <new_location>` to *move* a file or rename it
 - `touch <file_name>` will create a new file
 - `touch <file_name> ... <file_name>` will create all the files that we list
-- `rm <file_name> ... <file_name>` will delete all the files that we list. We can also use patterns.
+- `rm <file_name> ... <file_name>` will delete all the files that we list. We can also use patterns like `rm file*`.
 - `rm -r <directory_name>` will delete the directory and all its files
 
 ## Viewing and editing files
@@ -169,7 +171,7 @@ To view and edit files we can use `nano`. We open the file in nano by running.
 nano <file_name>
 ```
 
-We ca ¿n now make changes to the file in the text editor. To exit a file we press `control + x`.
+We can now make changes to the file in the text editor. To exit a file we press `control + x`.
 
 To see the content of a file we run:
 
@@ -203,7 +205,7 @@ Similarly, we can use `tail` to see the last `n` lines.
 tail -n 5 <file_name>
 ```
 
-## Redirection
+## Redirection (< and >)
 
 Tow basic concepts in Linux are
 
@@ -280,7 +282,7 @@ Likewise, we can use an *or* operator (`||`)
 mkdir test || echo "directory exists"
 ```
 
-We can also use piping (`|`) to chain command.
+We can also use piping (`|`) to chain command. Here output of first command goes to second command as input
 
 ``` shell
 ls /bin | less
